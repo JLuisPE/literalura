@@ -7,6 +7,7 @@ import com.alura.literalura.repository.BookRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,5 +49,19 @@ public class LibraryService {
             e.printStackTrace();
             return false; // Se produjo un error
         }
+    }
+
+    public void showStatistics() {
+        long totalBooks = bookRepository.count();
+        Book mostDownloadedBook = bookRepository.findFirstByOrderByDownloadCountDesc();
+        Book leastDownloadedBook = bookRepository.findFirstByOrderByDownloadCountAsc();
+        double averageDownloads = bookRepository.getAverageDownloads();
+
+        System.out.println("\nEstadísticas de libros:");
+        DecimalFormat df = new DecimalFormat("#,###");
+        System.out.println("Total de libros: " + df.format(totalBooks));
+        System.out.println("Libro más descargado: " + mostDownloadedBook.getTitle() + " - Descargas: " + df.format(mostDownloadedBook.getDownloadCount()));
+        System.out.println("Libro menos descargado: " + leastDownloadedBook.getTitle() + " - Descargas: " + df.format(leastDownloadedBook.getDownloadCount()));
+        System.out.println("Media de descargas: " + String.format("%.2f", averageDownloads));
     }
 }

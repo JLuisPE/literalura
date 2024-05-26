@@ -32,6 +32,7 @@ public class Menu {
         System.out.println("3 - Listar autores registrados");
         System.out.println("4 - Listar autores vivos en un determinado año");
         System.out.println("5 - Listar libros por idioma");
+        System.out.println("6 - Estadísticas");
         System.out.println("0 - Salir\n");
     }
     //Scanner scanner = new Scanner(System.in);
@@ -52,6 +53,9 @@ public class Menu {
                 break;
             case 5:
                 listarLibrosPorIdioma(scanner);
+                break;
+            case 6:
+                mostrarEstadisticas();
                 break;
             case 0:
                 System.out.println("Saliendo...");
@@ -119,5 +123,9 @@ public class Menu {
         } else {
             books.forEach(System.out::println);
         }
+    }
+
+    private void mostrarEstadisticas() {
+        libraryService.showStatistics();
     }
 }
